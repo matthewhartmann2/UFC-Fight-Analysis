@@ -5,7 +5,7 @@ name: Run Python Script on Schedule
 on:
   workflow_dispatch:
   # Can also specify a cron job here 
-  # vschedule:
+  # schedule:
    # - cron:'0 0 1 * *'
 
 jobs:
@@ -43,7 +43,3 @@ jobs:
       run: |
         source virtual_env_name/venv/bin/activate
         python your_github_directory/your_python_script.py
-      
-        
-  
-    
