@@ -1,0 +1,49 @@
+name: Run Python Script on Schedule
+
+#workflow dispatch allows for manual triggering within github actions 
+
+on:
+  workflow_dispatch:
+  # Can also specify a cron job here 
+  # vschedule:
+   # - cron:'0 0 1 * *'
+
+jobs:
+  run_script:
+    runs-on: macos-latest
+    #Can also use ubuntu-latest, windows-latest, etc.
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set Up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11.7'
+
+    - name: Access desired directory
+      run: |
+        cd your_github_directory
+
+    - name: Install dependencies and setup environment 
+      env:
+        #Secrets go here if needed 
+        GH_Token: ${{ secrets.Secret_Name }}
+      run:
+        python -m venv virtual_env_name/venv
+        source virtual_env_name/venv/bin/activate
+        pip install --upgrade pip
+        pip install -r your_github_directory/requirements.txt
+
+    - name: Activate environment and Run Python Script
+      env: 
+        GH_Token: ${{ secrets.Secret_Name }}
+
+      run: |
+        source virtual_env_name/venv/bin/activate
+        python your_github_directory/your_python_script.py
+      
+        
+  
+    
